@@ -8,7 +8,6 @@ import UpdateForm from './Movies/UpdateForm';
 const App = () => {
   const [savedList, setSavedList] = useState([]);
 
-
   const addToSavedList = movie => {
     setSavedList([...savedList, movie]);
   };
@@ -25,9 +24,7 @@ const App = () => {
       />
       <Route 
         path="/update-movie/:id"
-        render={props => (
-        <UpdateForm {...props}/>
-        )}
+        component={UpdateForm}
       />
     </>
   );
