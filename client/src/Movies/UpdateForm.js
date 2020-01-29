@@ -1,17 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 function UpdateForm()
 {
     const [movieInfo, setMovieInfo] = useState({
+        id: 0,
         title: '',
         director: '',
-        metascore: '',
-        actors: []
+        metascore: 0,
+       stars: []
     });
 
     const {id} = useParams();
+
+    const history = useHistory();
 
     useEffect(() =>
     {
@@ -19,33 +22,43 @@ function UpdateForm()
         .then(response =>
         {
             setMovieInfo({
+                    id: response.data.id,
                     title: response.data.title, 
                     director: response.data.director, 
                     metascore: response.data.metascore, 
-                    actors: response.data.stars});
+                    stars: response.data.stars});
         }) 
         .catch(error => console.log(error))
     },[])
 
     const handleChange = e =>
     {
-        setMovieInfo({...movieInfo, [e.target.name]: e.target.value});
+        if(e.target.name === 'metascore')
+        {
+            setMovieInfo({...movieInfo, metascore: parseInt(e.target.value)});
+        }
+        else
+        {
+            setMovieInfo({...movieInfo, [e.target.name]: e.target.value});
+        }
     }
 
-    const updateMovie = () =>
+    const updateMovie = e =>
     {
-        axios.post()
-        .then()
-        .catch()
-
-        //history push
+        e.preventDefault();
+        axios.put(`http://localhost:5000/api/movies/${id}`, movieInfo)
+        .then(response =>
+        {
+            history.push('/')
+        })
+        .catch(error => console.log(error))
     }
 
     return(
         <div className='update-form'>
             <h2>Update Movie</h2>
 
-            <form>
+            <form onSubmit={updateMovie}>
                 <input
                     type='text'
                     name='title'
@@ -72,9 +85,9 @@ function UpdateForm()
                     name='actors'
                     onChange={handleChange}
                     placeholder='Actors'
-                    value={movieInfo.actors}/>
+                    value={movieInfo.stars}/>
 
-                <button onClick={updateMovie}>Update</button>
+                <button>Update</button>
             </form>
         </div>
     );
