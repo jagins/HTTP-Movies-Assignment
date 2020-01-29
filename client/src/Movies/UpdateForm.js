@@ -29,7 +29,7 @@ function UpdateForm()
                     stars: response.data.stars});
         }) 
         .catch(error => console.log(error))
-    },[])
+    },[id])
 
     const handleChange = e =>
     {
