@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-// import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function UpdateForm()
+function UpdateForm(props)
 {
     const [movieInfo, setMovieInfo] = useState({
         title: '',
@@ -10,13 +10,14 @@ function UpdateForm()
         metascore: '',
         actors: []
     });
-
-    // const {id} = useParams();
+    const {id} = useParams();
 
     useEffect(() =>
     {
+        if(props.movie)
+            console.log('from update form', props.movie);
 
-    }, [])
+    }, [props.movie, id])
 
     const handleChange = () =>
     {

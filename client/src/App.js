@@ -8,6 +8,7 @@ import UpdateForm from './Movies/UpdateForm';
 const App = () => {
   const [savedList, setSavedList] = useState([]);
 
+
   const addToSavedList = movie => {
     setSavedList([...savedList, movie]);
   };
